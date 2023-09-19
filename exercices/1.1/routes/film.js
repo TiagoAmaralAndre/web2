@@ -14,7 +14,7 @@ const MENU = [
       budjet:'93 millions USD',
       link:'https://fr.wikipedia.org/wiki/Le_Seigneur_des_anneaux_(s%C3%A9rie_de_films)'
     },
-    
+
     {
         id: 2,
         title: 'The shinning',
