@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:3000
+
+
+### Create a film
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+    "title":"Film Test",
+    "duration":155,
+    "budget": 15,
+    "link": "https://fr.wikipedia.org/wiki/Spider-Man"
+}
