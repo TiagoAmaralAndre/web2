@@ -33,38 +33,25 @@ const MENU = [
 
 
   router.get('/', (req, res, next) => {
-    const minimuduration = req.query['minimum-duration'] ?? undefined;
-    const orderByTitle = req?.query?.order?.includes('title') ? req.query.order : undefined;
-    const orderByChar = req.query.char ?? undefined;
-    let filtre;
-    let filtre2;
- 
-   if(orderByChar) {
-     filtre2 = [];
-     for (const film of MENU) {
-       console.log(film.title.charAt(0));
-       if(film.title.charAt(0) == orderByChar) {
-           filtre2.push(film);
-       } 
-   }
-   res.json(filtre2 ?? MENU);
-   }
-   else if(orderByTitle) {
-     let orderedMenu;
-     if (orderByTitle) orderedMenu = [...MENU].sort((a, b) => a.title.localeCompare(b.title));
-     if (orderByTitle === '-title') orderedMenu = orderedMenu.reverse();
-     res.json(orderedMenu ?? MENU);
-   } 
-   else{
-     filtre = [];
-     for (const film of MENU) {
-         if(film.duration >= minimuduration) {
-             filtre.push(film);
-         } 
-     }
-     res.json(filtre ?? MENU);
-   }
- });
+    const minimumDuration = req.query['minimum-duration'] ? parseInt(req.query['minimum-duration']) : undefined;
+    const orderByTitle = req.query.order === 'title' ? 'title' : undefined;
+    const orderByChar = req.query.char || undefined;
+    let filteredMenu = [...MENU];
+
+    if (orderByChar) {
+        filteredMenu = MENU.filter(film => film.title.charAt(0) === orderByChar);
+    } else if (orderByTitle) {
+        if (orderByTitle === 'title') {
+            filteredMenu.sort((a, b) => a.title.localeCompare(b.title));
+        } else if (orderByTitle === '-title') {
+            filteredMenu.sort((a, b) => b.title.localeCompare(a.title));
+        }
+    } else if (minimumDuration) {
+        filteredMenu = MENU.filter(film => film.duration >= minimumDuration);
+    }
+
+    res.json(filteredMenu);
+});
 
 
 router.get('/:id', (req, res) => {
