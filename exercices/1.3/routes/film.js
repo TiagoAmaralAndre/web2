@@ -91,4 +91,77 @@ router.post('/', (req, res) => {
 });
 
 
+router.delete('/:id', (req, res) => {
+  console.log(`DELETE/films/${req.params.id}`);
+  const foundIndex = MENU.findIndex(film => film.id == req.params.id);
+  if (foundIndex < 0) return res.sendStatus(404);
+  const itemsRemovedFromMenu = MENU.splice(foundIndex, 1);
+  const itemRemoved = itemsRemovedFromMenu[0];
+
+  res.json(itemRemoved);
+});
+
+
+router.patch('/:id', (req, res) => {
+  console.log(`PATCH /films/${req.params.id}`);
+
+  const title = req?.body?.title;
+  const content = req?.body?.content;
+
+  console.log('POST /films');
+
+  if ((!title && !content) || title?.length === 0 || content?.length === 0) return res.sendStatus(400);
+
+  const foundIndex = MENU.findIndex(film => film.id == req.params.id);
+
+  if (foundIndex < 0) return res.sendStatus(404);
+
+  const updatedPizza = {...MENU[foundIndex], ...req.body};
+
+  MENU[foundIndex] = updatedPizza;
+
+  res.json(updatedPizza);
+});
+
+router.put('/:id', (req, res) => {
+
+  const title = req?.body?.title;
+  const duration = req?.body?.duration;
+  const budget = req?.body?.budget;
+  const link = req?.body?.link;
+
+  if ((!title && !duration && !budget && !link) || title?.length === 0 || link?.length === 0 || duration <= 0 || budget <= 0) return res.sendStatus(400);
+  const foundIndex = MENU.findIndex(film => film.id == req.params.id);
+
+  if (foundIndex) {
+
+  const newFilm = {
+    title: title,
+    duration: duration,
+    budget: budget,
+    link: link
+  };
+
+  const updatedFilm = {...MENU[foundIndex], ...req.body};
+  MENU[foundIndex] = newFilm;
+  res.json(updatedFilm);
+
+  }
+
+  const lastItemIndex = MENU?.length !== 0 ? MENU.length - 1 : undefined;
+  const lastId = lastItemIndex !== undefined ? MENU[lastItemIndex]?.id : 0;
+  const nextId = lastId + 1;
+
+    const newFilm = {
+      id: nextId,
+      title: title,
+      duration: duration,
+      budget: budget,
+      link: link
+    };
+    MENU.push(newFilm);
+    res.json(newFilm);
+  }
+);
+
 module.exports = router;

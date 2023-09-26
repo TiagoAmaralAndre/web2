@@ -11,3 +11,13 @@ Content-Type: application/json
     "budget": 15,
     "link": "https://fr.wikipedia.org/wiki/Spider-Man"
 }
+### Supprimer id
+DELETE {{baseUrl}}/films/2
+
+### Update the pizza identified by 6
+PATCH {{baseUrl}}/films/2
+Content-Type: application/json
+
+{
+    "title":"Magic Green 2"
+}
