@@ -144,7 +144,7 @@ router.put('/:id', (req, res) => {
 
   const updatedFilm = {...MENU[foundIndex], ...req.body};
   MENU[foundIndex] = newFilm;
-  res.json(updatedFilm);
+  return res.json(updatedFilm);
 
   }
 
