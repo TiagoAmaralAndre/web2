@@ -1,0 +1,38 @@
+@baseUrl = http://localhost:3000
+
+
+### Create a film
+POST {{baseUrl}}/films
+Content-Type: application/json
+
+{
+    "title":"Film Test",
+    "duration":155,
+    "budget": 15,
+    "link": "https://fr.wikipedia.org/wiki/Spider-Man"
+}
+### Supprimer id
+DELETE {{baseUrl}}/films/2
+
+### Update the pizza identified by 6
+PATCH {{baseUrl}}/films/2
+Content-Type: application/json
+
+{
+    "title":"Magic Green 2"
+}
+
+
+### Update 
+PUT {{baseUrl}}/films/2
+Content-Type: application/json
+
+{
+    "title":"Magic Green 2",
+    "duration":"duration",
+    "budget":7,
+    "link":"htt",
+}
+
+
+
